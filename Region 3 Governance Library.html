@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17365D">
+<title>Region 3 Governance Library</title>
+
+<style>
+:root {
+  --navy: #17365D;
+  --blue: #2165B5;
+  --gold: #D5AD48;
+  --light: #F4F6FA;
+  --white: #FFFFFF;
+  --text: #233247;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--light);
+  color: var(--text);
+}
+
+header {
+  background: linear-gradient(135deg, #17365D, #245B91);
+  color: white;
+  text-align: center;
+  padding: 28px 16px 24px;
+  border-bottom: 6px solid var(--gold);
+}
+
+.logo {
+  width: 145px;
+  height: 145px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: white;
+  margin-bottom: 14px;
+}
+
+header h1 {
+  margin: 4px 0 10px;
+  font-size: clamp(24px, 5vw, 34px);
+}
+
+header p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.subtitle {
+  color: #F5D989;
+  font-size: 13px;
+  margin-top: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+main {
+  width: 100%;
+  max-width: 1000px;
+  padding: 22px 16px;
+  margin: auto;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.intro h2 {
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.intro p {
+  line-height: 1.6;
+  margin-top: 0;
+}
+
+.search {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #CBD3DF;
+  border-radius: 10px;
+  margin: 8px 0 20px;
+  background: white;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  justify-content: center;
+}
+
+.filters button {
+  border: 1px solid var(--navy);
+  background: white;
+  color: var(--navy);
+  border-radius: 24px;
+  padding: 10px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: var(--navy);
+  color: white;
+}
+
+.section-title {
+  color: var(--navy);
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 9px;
+  margin: 26px 0 14px;
+}
+
+.library {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.document {
+  background: white;
+  border: 1px solid #E0E5ED;
+  border-top: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 3px 10px #17365D0D;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.document h3 {
+  color: var(--navy);
+  font-size: 17px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.category {
+  color: #5C6F85;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.document p {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.open-link {
+  display: block;
+  text-align: center;
+  background: var(--navy);
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 7px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.open-link:focus,
+.open-link:hover {
+  background: var(--blue);
+}
+
+.empty {
+  text-align: center;
+  padding: 24px;
+  color: #5C6F85;
+  grid-column: 1 / -1;
+}
+
+footer {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 22px 14px;
+  margin-top: 30px;
+  border-top: 5px solid var(--gold);
+  font-size: 12px;
+  line-height: 1.8;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img class="logo"
+       src="https://drive.google.com/file/d/19XI_wX05Kno0IDXfx8of6Ra3kkYhCEu2/view?usp=drive_link"
+       alt="Region 3 Logo"
+       onerror="this.style.display='none'">
+
+  <h1>Region 3 Governance Library</h1>
+  <p>Ministry of Education, Skills, Youth and Information</p>
+  <p>St. Ann and Trelawny, Jamaica</p>
+  <div class="subtitle">Trailblazers Creating Impact</div>
+</header>
+
+<main>
+  <div class="intro">
+    <h2>Welcome to the Governance Library</h2>
+    <p>
+      A central offline reference library for legislation,
+      public service guidance and governance documents.
+      Select a document below to open it.
+    </p>
+  </div>
+
+  <input
+    id="search"
+    class="search"
+    type="search"
+    placeholder="Search Acts and documents..."
+    aria-label="Search documents">
+
+  <div class="filters" id="filters"></div>
+
+  <h2 class="section-title" id="list-heading">
+    Available Documents
+  </h2>
+
+  <div class="library" id="library"></div>
+</main>
+
+<footer>
+  REGION 3 • ST. ANN AND TRELAWNY<br>
+  Governance Reference Library<br>
+  For reference purposes. Verify current legislation
+  and amendments using authoritative sources.
+</footer>
+
+<script>
+/*
+  IMPORTANT:
+  Keep this HTML file, the logo and the PDFs together
+  in the Acts folder.
+
+  Change each filename below to match the actual PDF
+  filename in your folder, including its .pdf extension.
+*/
+
+const documents = [
+  {
+    title: "Staff Orders for the Public Service",
+    category: "Public Service",
+    file: "https://drive.google.com/file/d/1vVx18oRxtYiKAQSYUnZ8XDsBpsofnGcM/view?usp=drive_link",
+    description: "Public service procedures and guidance."
+  },
+  {
+    title: "Financial Administration and Audit Act",
+    category: "Finance and Audit",
+    file: "https://drive.google.com/file/d/1M4RGYf9PxS6ESPMsGznwAX_rRunuEJfk/view?usp=drive_link",
+    description: "Financial administration, expenditure and audit."
+  },
+  {
+    title: "National Council on Education Act",
+    category: "Education",
+    file: "https://drive.google.com/file/d/1dyHWcOllle_YljTjHUzEa4nRt5rueRZ5/view?usp=drive_link",
+    description: "The National Council on Education and its functions."
+  },
+  {
+    title: "Child Care and Protection Act",
+    category: "Child Protection",
+    file: "https://drive.google.com/file/d/1U2uvS6HoMlAJNSC0xYRC5gBZW_I8l8HS/view?usp=drive_link",
+    description: "Care, protection and welfare of children."
+  },
+  {
+    title: "Access to Information Act",
+    category: "Information and Data",
+    file: "https://drive.google.com/file/d/1JkecEXh0SnIpoT19xzLC-vmSDmR3bjCI/view?usp=drive_link",
+    description: "Access to official information held by public authorities."
+  },
+  {
+    title: "Sexual Offences Act, 2009",
+    category: "Child Protection",
+    file: "https://drive.google.com/file/d/1aBZNeYBVqCItyQJ46kHnlP4Af5a06fjP/view?usp=drive_link",
+    description: "Legislation addressing sexual offences."
+  },
+  {
+    title: "Offences Against the Person Act",
+    category: "Other Legislation",
+    file: "https://drive.google.com/file/d/1LSp7bQUCoB3at4g_7-WY7OJbHVBegZAz/view?usp=drive_link",
+    description: "Legislation addressing offences against persons."
+  },
+{
+    title: "Data Protection Act",
+    category: "Information and Data",
+    file: "https://drive.google.com/file/d/1EKgTLNwdkygPkRMfGX7a7sAj_fZroED4/view?usp=drive_link",
+    description: "Legislation addressing offences against persons."
+  },
+{
+    title: "Education Regulation Act 1980",
+    category: "Education",
+    file: "https://drive.google.com/file/d/1EKgTLNwdkygPkRMfGX7a7sAj_fZroED4/view?usp=drive_link",
+    description: "Legislation governing the administration and operation of Jamaica's education system."
+  },
+{
+    title: "Early Childhood Commission Act 2023",
+    category: "Education",
+    file: "https://drive.google.com/file/d/1wCYBHOdtxYJpx76fhyx9RrC1OFLEH-hP/view?usp=drive_link",
+    description: "Legislation establishing the Early Childhood Commission and outlining its role in coordinating, regulating, and supporting early childhood care, education, and development in Jamaica."
+  },
+{
+    title: "The Education Act",
+    category: "Education",
+    file: "https://drive.google.com/file/d/1q2lO_GiwDb2UbwXGyrvUA8T7oSox5iW-/view?usp=drive_link",
+    description: "Legislation establishing the framework for Jamaica's public education system, including school administration, teacher registration, compulsory education, and the regulation of independent schools."
+  },
+{
+    title: "The Jamaica Teaching Council Act 2022",
+    category: "Education",
+    file: "https://drive.google.com/file/d/142WwrJsfxbWEOGbeR-3Wwg9O7nTk7qXN/view?usp=drive_link",
+    description: "Legislation regulating teacher registration, licensing, and professional standards in Jamaica."
+  },
+
+{
+    title: "The Public Procurement Amendment Act 2025",
+    category: "Finance and Audit",
+    file: "https://drive.google.com/file/d/1QUxhJaSzrjGr5r9h4T03pjpY54-76_ro/view?usp=drive_link",
+    description: "Legislation governing fair, transparent, and accountable public procurement in Jamaica."
+  }
+
+];
+
+const categories = [
+  "All Documents",
+  ...new Set(documents.map(doc => doc.category))
+];
+
+let selectedCategory = "All Documents";
+
+const filters = document.getElementById("filters");
+const library = document.getElementById("library");
+const search = document.getElementById("search");
+const heading = document.getElementById("list-heading");
+
+function makeFilters() {
+  filters.innerHTML = "";
+
+  categories.forEach(category => {
+    const button = document.createElement("button");
+    button.textContent = category;
+    button.className =
+      category === selectedCategory ? "active" : "";
+
+    button.addEventListener("click", () => {
+      selectedCategory = category;
+      makeFilters();
+      renderDocuments();
+    });
+
+    filters.appendChild(button);
+  });
+}
+
+function renderDocuments() {
+  const query = search.value.trim().toLowerCase();
+
+  const matching = documents.filter(doc => {
+    const matchesCategory =
+      selectedCategory === "All Documents" ||
+      doc.category === selectedCategory;
+
+    const matchesSearch =
+      (doc.title + " " + doc.category + " " +
+       doc.description).toLowerCase().includes(query);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  heading.textContent =
+    selectedCategory === "All Documents"
+      ? "Available Documents"
+      : selectedCategory;
+
+  library.innerHTML = "";
+
+  if (matching.length === 0) {
+    library.innerHTML =
+      '<div class="empty">No matching documents found.</div>';
+    return;
+  }
+
+  matching.forEach(doc => {
+    const card = document.createElement("article");
+    card.className = "document";
+
+    const category = document.createElement("div");
+    category.className = "category";
+    category.textContent = doc.category;
+
+    const title = document.createElement("h3");
+    title.textContent = doc.title;
+
+    const description = document.createElement("p");
+    description.textContent = doc.description;
+
+    const link = document.createElement("a");
+    link.className = "open-link";
+    link.href = doc.file;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = "Open Document (PDF)";
+
+    card.append(category, title, description, link);
+    library.appendChild(card);
+  });
+}
+
+search.addEventListener("input", renderDocuments);
+
+makeFilters();
+renderDocuments();
+</script>
+
+</body>
+</html>
